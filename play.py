@@ -5,18 +5,27 @@ from utils import bcolors
 def determine_word_positions(word: str, guess: str) -> Tuple[bool, str]:
     output = ""
     guessed = True
-    for i, char in enumerate(word):
+    for i, char in enumerate(guess):
         char_upper = char.upper()
-        guess_upper = guess[i].upper()
-        if char_upper == guess_upper:
-            output += f"{bcolors.OKGREEN}{guess_upper}{bcolors.ENDC}"
-        elif char_upper in guess.upper():
-            output += f"{bcolors.OKBLUE}{guess_upper}{bcolors.ENDC}"
+        word_upper = word[i].upper()
+        if char_upper == word_upper:
+            output += f"{bcolors.OKGREEN}{char_upper}{bcolors.ENDC}"
+        elif char_upper in word.upper():
+            output += f"{bcolors.OKBLUE}{char_upper}{bcolors.ENDC}"
             guessed = False
         else:
-            output += f"{guess_upper}"
+            output += f"{char_upper}"
             guessed = False
     return output, guessed
+
+
+def take_guess(prompt: str = "") -> str:
+    guess = input(prompt)
+    while len(guess) != 5:
+        print("Your guess is the incorrect length. It must be 5 characters. "
+              "Try again:")
+        guess = input()
+    return guess
 
 
 if __name__ == "__main__":
@@ -28,12 +37,12 @@ if __name__ == "__main__":
     )
     while True:
         word = choice(list_of_words)
-        guess = input("Guess the new word: ")
+        guess = take_guess("Guess the new word: ")
         output, guessed = determine_word_positions(word, guess)
 
         while not guessed:
             print(output)
-            guess = input()
+            guess = take_guess()
             output, guessed = determine_word_positions(word, guess)
         print("Correct!")
         print(output)
