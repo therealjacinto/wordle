@@ -46,15 +46,16 @@ if __name__ == "__main__":
         start = time.perf_counter()
         output, guessed = determine_word_positions(word, initial_guess)
 
-        if not guessed:
-            order.append(output)
-            output = convert_color_to_code(output)
+        # Force second guess as CLINT
+        # if not guessed:
+        #     order.append(output)
+        #     output = convert_color_to_code(output)
 
-            incorrect_letters += parse_input(output, guess, incorrect_positions)
-            second_guess = "CLINT"
-            num_guesses += 1
-            
-            output, guessed = determine_word_positions(word, second_guess)
+        #     incorrect_letters += parse_input(output, guess, incorrect_positions)
+        #     second_guess = "CLINT"
+        #     num_guesses += 1
+
+        #     output, guessed = determine_word_positions(word, second_guess)
 
         while not guessed:
             order.append(output)

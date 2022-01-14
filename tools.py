@@ -1,4 +1,5 @@
 import random
+from bisect import bisect_left
 from typing import List, Dict
 
 from utils import UPPER_LETTERS
@@ -63,6 +64,14 @@ def generate_guesses(guess: List[str], index: int, correct_letter_positions: Lis
             if letter in incorrect_letters or letter in incorrect_letter_positions[index]:
                 continue
             guess[index] = letter
+            if index > 1 and index < 4:
+                try:
+                    guess_word = list_to_word(guess[:index + 1])
+                    exists = list_of_words[bisect_left(list_of_words, guess_word)].startswith(guess_word)
+                    if not exists:
+                        continue
+                except IndexError:
+                    continue
             generate_guesses(guess, index + 1, correct_letter_positions, incorrect_letter_positions, incorrect_letters, guesses, list_of_words)
 
 
@@ -78,22 +87,39 @@ def determine_words(list_of_words: List[str], correct_letter_positions: List[str
     return guesses
 
 
-def determine_a_good_guess(guesses: List[str], ignore_words: List[str] = []) -> str:
+def determine_a_good_guess(guesses: List[str]) -> str:
+    if len(guesses) == 0:
+        return
+    
+    unique_char_guesses = []
+    frequency = {}
     for guess in guesses:
-        if guess in ignore_words:
-            continue
         good_guess = True
         for char in guess:
             if guess.count(char) > 1:
                 good_guess = False
-                break
+            if char in frequency:
+                frequency[char] += 1
+            else:
+                frequency[char] = 1
         if good_guess:
-            return guess
+            unique_char_guesses.append(guess)
     
+    largest_total = 0
+    best_word = ""
+    for guess in unique_char_guesses:
+        total = 0
+        for char in guess:
+            total += frequency[char]
+        if total > largest_total:
+            largest_total = total
+            best_word = guess
+
+    if largest_total > 0:
+        return best_word
+
     # Dealer's choice
     word = random.choice(guesses)
-    while word in ignore_words:
-        word = random.choice(guesses)
     return word
 
 
@@ -127,19 +153,30 @@ if __name__ == "__main__":
     #print(find_word_with_letters(["S", "O", "I", "R", "N"], list_of_words))
 
     # Try and guess
-    while True:
-        guess = ["", "", "", "", ""]
-        incorrect_positions = ["", "", "", "", ""]
-        incorrect_letters = ""
+    guess = ["", "", "", "", ""]
+    incorrect_positions = ["", "", "", "", ""]
+    incorrect_letters = ""
 
-        result = input("What was the result of AROSE?: ")
-        incorrect_letters += parse_input(result, guess, incorrect_positions)
-        guesses = determine_words(list_of_words, guess, incorrect_positions, incorrect_letters)
-        while len(guesses) > 1:
+    result = input("What was the result of AROSE/CLEAT?: ")
+    incorrect_letters += parse_input(result, guess, incorrect_positions)
+    result = input("What was the result of CLINT/IRONS?: ")
+    incorrect_letters += parse_input(result, guess, incorrect_positions)
+
+    guesses = determine_words(list_of_words, guess, incorrect_positions, incorrect_letters)
+    while len(guesses) > 1:
+        proposed_guess = determine_a_good_guess(guesses)
+        print(f"Try {proposed_guess}?")
+        y_n = input("Y/n: ")
+        while y_n == "N" or y_n == "n":
+            guesses.remove(proposed_guess)
             proposed_guess = determine_a_good_guess(guesses)
-            print(f"Try {proposed_guess}.")
-            result = input(f"What was the result of {proposed_guess}? ")
-            incorrect_letters += parse_input(result, guess, incorrect_positions)
-            guesses = determine_words(guesses, guess, incorrect_positions, incorrect_letters)
+            if proposed_guess is None:
+                print("Out of options")
+                exit()
+            print(f"Try {proposed_guess}?")
+            y_n = input("Y/n: ")
+        result = input(f"What was the result of {proposed_guess}? ")
+        incorrect_letters += parse_input(result, guess, incorrect_positions)
+        guesses = determine_words(guesses, guess, incorrect_positions, incorrect_letters)
 
-        print(f"Good job! The word was {guesses}")
+    print(f"Good job! The word was {guesses}")
