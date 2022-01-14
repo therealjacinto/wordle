@@ -3,7 +3,7 @@ from typing import List
 import requests
 
 
-def get_word_list(url: str, length: int) -> List[str]:
+def get_word_list(url: str, length: int, upper: bool = False) -> List[str]:
     list_of_words = []
 
     response = requests.get(url)
@@ -11,6 +11,8 @@ def get_word_list(url: str, length: int) -> List[str]:
         words = response.text.splitlines()
         for word in words:
             if len(word) == length:
-                list_of_words.append(word)
-
+                if upper:
+                    list_of_words.append(word.upper())
+                else:
+                    list_of_words.append(word)
     return list_of_words
