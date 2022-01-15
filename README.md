@@ -30,7 +30,7 @@ python play.py
 ```sh
 python guesser.py
 ```
-- You will be prompted to try a word as a guess. You must first reply with a `Y` or a `N`. This is in case the generated word might not be an actual word. Most words are actual words, however if you look at the list of words from [this site](https://www.mit.edu/~ecprice/wordlist.100000), they are not all real words.
+- You will be prompted to try a word as a guess. You must first reply with a `Y` or a `N`. This is in case the generated word might not be an actual word. Most words are actual words, however if you look at the list of words from [this site](https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt), they are not all real words.
 - Once you have a word you responded with `Y` (a word you have tried), you can input the results using the following format:
     - The letter followed by the result of that letter. Use **0** for an incorrect letter, a **1** for a letter that is in the word but is in the wrong position, and a **2** for a letter in the correct position.
     - An example string might look something like: `A0R1O2S0E0` for the word `AROSE` where the `A` and `E` are incorrect letters, the `R` is a letter that exists in the word but is at the wrong position, and the `O` is at the correct position.

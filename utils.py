@@ -23,9 +23,9 @@ UPPER_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
                  "Y", "Z"]
 
 
-def generate_word_list(url: str, length: int = 5,
-                       force_upper: bool = True,
-                       force_alphabetical_sort: bool = True) -> List[str]:
+def generate_word_list_from_url(
+        url: str, length: int = 5, force_upper: bool = True,
+        force_alphabetical_sort: bool = True) -> List[str]:
     """Get list of words from url and formats them."""
     list_of_words = []
 
@@ -40,6 +40,22 @@ def generate_word_list(url: str, length: int = 5,
                     list_of_words.append(word.upper())
                 else:
                     list_of_words.append(word)
+    # Sort words (useful for binary searches later on)
+    if force_alphabetical_sort:
+        list_of_words.sort()
+    return list_of_words
+
+
+def generate_word_list_from_file(filename: str, force_upper: bool = True,
+                                 force_alphabetical_sort: bool = True):
+    """Get list of words from file and formats them."""
+    list_of_words = []
+    with open(filename) as file:
+        word = file.readline()
+        if force_upper:
+            # Apply formatting
+            word = word.upper()
+        list_of_words.append(word.upper())
     # Sort words (useful for binary searches later on)
     if force_alphabetical_sort:
         list_of_words.sort()

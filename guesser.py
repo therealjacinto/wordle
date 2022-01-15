@@ -104,7 +104,8 @@ def determine_words(
 
 def determine_highest_weight_word(
         words: List[str], frequency_weights: Dict[str, int],
-        position_frequencies: List[Dict[str, int]]) -> str:
+        position_frequencies: List[Dict[str, int]], freq_weight: int,
+        pos_weight: int) -> str:
     """Determine word weight based on frequency of character in list."""
     # Initialize counters
     largest_total = 0
@@ -114,14 +115,16 @@ def determine_highest_weight_word(
     for guess in words:
         total = 0
         for i, char in enumerate(guess):
-            total += frequency_weights[char] * position_frequencies[i][char]
+            total += (frequency_weights[char] * freq_weight) + \
+                (position_frequencies[i][char] * pos_weight)
         if total > largest_total:
             largest_total = total
             best_word = guess
     return best_word
 
 
-def determine_a_good_guess(guesses: List[str]) -> str:
+def determine_a_good_guess(guesses: List[str], freq_weight: int = 1,
+                           pos_weight: int = 1) -> str:
     """Determine a good word to use for guess.
     
     This function takes into account words that have duplicate letters (given
@@ -158,7 +161,8 @@ def determine_a_good_guess(guesses: List[str]) -> str:
             unique_char_guesses.append(guess)
 
     best_word = determine_highest_weight_word(unique_char_guesses, frequency,
-                                              character_position_frequency)
+                                              character_position_frequency,
+                                              freq_weight, pos_weight)
 
     # best_word can be None if there exists no word without repeated letters
     if best_word is not None:
@@ -191,10 +195,10 @@ def parse_input(user_input: str, correct_letter_positions: List[str],
 
 
 if __name__ == "__main__":
-    from utils import generate_word_list
+    from utils import generate_word_list_from_url
 
-    list_of_words = generate_word_list(
-        "https://www.mit.edu/~ecprice/wordlist.100000", 5, True
+    list_of_words = generate_word_list_from_url(
+        "https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt", 5, True
     )
 
     # Try and guess
