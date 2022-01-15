@@ -15,7 +15,8 @@ if __name__ == "__main__":
         "https://www.mit.edu/~ecprice/wordlist.100000", 5, True
     )
     # Write header to benchmark file
-    with open('results.csv', 'w') as csvfile:
+    filename = 'results.csv'
+    with open(filename, 'w') as csvfile:
         row_writer = csv.writer(csvfile, delimiter=',')
         header = ["word", "guessing_time (s)","num_attempts","guesses"]
         row_writer.writerow(header)
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         print(f"{color_output}: guessed in {end - start} seconds with "
               f"{num_guesses} attempts: {' '.join(order)}")
 
-        with open('results.csv', 'a') as csvfile:
+        with open(filename, 'a') as csvfile:
             row_writer = csv.writer(csvfile, delimiter=',')
             csv_row = [
                 remove_formatting(color_output),
