@@ -5,14 +5,14 @@ if __name__ == "__main__":
     import time
     import csv
 
-    from utils import generate_word_list, convert_color_to_code, \
+    from utils import generate_word_list_from_url, convert_color_to_code, \
         remove_formatting
     from play import determine_word_positions
     from guesser import parse_input, determine_words, determine_a_good_guess
 
     # Generate word list
-    list_of_words = generate_word_list(
-        "https://www.mit.edu/~ecprice/wordlist.100000", 5, True
+    list_of_words = generate_word_list_from_url(
+        "https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt", 5, True
     )
     # Write header to benchmark file
     filename = 'results.csv'
