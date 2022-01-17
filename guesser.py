@@ -169,7 +169,8 @@ def determine_a_good_guess(guesses: List[str], freq_weight: int = 1,
         return best_word
 
     # Dealer's choice
-    return guesses[0]
+    word = random.choice(guesses)
+    return word
 
 
 def parse_input(user_input: str, correct_letter_positions: List[str],
