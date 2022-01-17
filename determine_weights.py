@@ -1,7 +1,6 @@
 # Script to determine weights for determine_highest_weight_word
 
 if __name__ == "__main__":
-    import random
     import csv
 
     from utils import generate_word_list_from_url, convert_color_to_code
@@ -9,8 +8,8 @@ if __name__ == "__main__":
     from guesser import parse_input, determine_words, determine_a_good_guess
 
     # Test parameters
-    freq_weights = [0.00001, 0.0001, 0.001, 0.01, 0.1, 1]
-    pos_weights = [1, 10, 100, 1000, 10000, 100000]
+    freq_weights = [1]
+    pos_weights = [0.900]
 
     # Generate word list
     list_of_words = generate_word_list_from_url(

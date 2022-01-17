@@ -1,7 +1,6 @@
 # Script to benchmark the the guesser algorithm against the wordle game.
 
 if __name__ == "__main__":
-    import random
     import time
     import csv
 
@@ -21,9 +20,8 @@ if __name__ == "__main__":
         header = ["word", "guessing_time (s)","num_attempts","guesses"]
         row_writer.writerow(header)
 
-    while True:
+    for word in list_of_words:
         order = []
-        word = random.choice(list_of_words)
 
         # Initialize character info
         guesses = list_of_words

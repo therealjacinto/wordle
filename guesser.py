@@ -124,7 +124,7 @@ def determine_highest_weight_word(
 
 
 def determine_a_good_guess(guesses: List[str], freq_weight: int = 1,
-                           pos_weight: int = 1) -> str:
+                           pos_weight: int = 0.9) -> str:
     """Determine a good word to use for guess.
     
     This function takes into account words that have duplicate letters (given
