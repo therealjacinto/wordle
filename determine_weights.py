@@ -5,7 +5,7 @@ if __name__ == "__main__":
     import time
     import csv
 
-    from utils import generate_word_list_from_url, convert_color_to_code
+    from utils import generate_word_list_from_file, convert_color_to_code
     from play import determine_word_positions
     from guesser import parse_input, determine_words, determine_a_good_guess
 
@@ -21,9 +21,7 @@ if __name__ == "__main__":
     num_tests = 300
 
     # Generate word list
-    list_of_words = generate_word_list_from_url(
-        "https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt", 5, True
-    )
+    list_of_words = generate_word_list_from_file("word.list")
 
     # Write header to weights file
     filename = 'weights.csv'

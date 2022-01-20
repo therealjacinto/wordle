@@ -195,11 +195,9 @@ def parse_input(user_input: str, correct_letter_positions: List[str],
 
 
 if __name__ == "__main__":
-    from utils import generate_word_list_from_url
+    from utils import generate_word_list_from_file
 
-    list_of_words = generate_word_list_from_url(
-        "https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt", 5, True
-    )
+    list_of_words = generate_word_list_from_file("word.list")
 
     # Try and guess
     guess = ["", "", "", "", ""]
