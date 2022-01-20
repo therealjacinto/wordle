@@ -3,7 +3,7 @@ from typing import Tuple
 from utils import bcolors
 
 
-def determine_word_positions(word: str, guess: str) -> Tuple[bool, str]:
+def determine_word_positions(word: str, guess: str) -> Tuple[str, bool]:
     """Color string based on position information and return result."""
     output = ""
     guessed = True
@@ -53,12 +53,17 @@ if __name__ == "__main__":
     )
 
     # Play game forever
+    game_number = 1
     while True:
         word = random.choice(list_of_words)
+        attempt = 1
         guessed = False
 
-        print("Guess the new word: ")
+        print("[Game {}] Guess the new word: ".format(game_number))
         while not guessed:
             guess = take_guess()
             output, guessed = determine_word_positions(word, guess)
-            print(output)
+            print("[Attempt {}]: {}".format(attempt, output))
+            attempt += 1
+        print("Yay, You guessed the word!")
+        game_number += 1
