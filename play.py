@@ -63,7 +63,7 @@ if __name__ == "__main__":
         while not guessed:
             guess = take_guess()
             output, guessed = determine_word_positions(word, guess)
-            print("[Attempt {}]: {}".format(attempt,output))
+            print("[Attempt {}]: {}".format(attempt, output))
             attempt += 1
         print("Yay, You guessed the word!")
         game_number += 1
