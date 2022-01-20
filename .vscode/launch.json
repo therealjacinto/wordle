@@ -5,10 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Guesser",
+            "type": "python",
+            "request": "launch",
+            "program": "guesser.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Run Benchmark",
             "type": "python",
             "request": "launch",
             "program": "benchmark.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Play Game",
+            "type": "python",
+            "request": "launch",
+            "program": "play.py",
             "console": "integratedTerminal"
         }
     ]
