@@ -45,12 +45,10 @@ def take_guess(force_upper: bool = True) -> str:
 if __name__ == "__main__":
     import random
 
-    from utils import generate_word_list_from_url    
+    from utils import generate_word_list_from_file    
 
     # Generate list of words
-    list_of_words = generate_word_list_from_url(
-        "https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt", 5, True
-    )
+    list_of_words = generate_word_list_from_file("word.list")
 
     # Play game forever
     game_number = 1

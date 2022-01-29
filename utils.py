@@ -51,11 +51,11 @@ def generate_word_list_from_file(filename: str, force_upper: bool = True,
     """Get list of words from file and formats them."""
     list_of_words = []
     with open(filename) as file:
-        word = file.readline()
-        if force_upper:
-            # Apply formatting
-            word = word.upper()
-        list_of_words.append(word.upper())
+        while (word := file.readline().rstrip()):
+            if force_upper:
+                # Apply formatting
+                word = word.upper()
+            list_of_words.append(word)
     # Sort words (useful for binary searches later on)
     if force_alphabetical_sort:
         list_of_words.sort()
